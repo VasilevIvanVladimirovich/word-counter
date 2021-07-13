@@ -1,11 +1,12 @@
 import java.io.*;
+import java.io.FileInputStream;
 import java.util.Locale;
 import java.util.Vector;
 import java.util.StringTokenizer;
 
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.extractor.WordExtractor;
-import org.apache.poi.xwpf.*;
+
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 
 public class FileProcessing {
@@ -21,19 +22,10 @@ public class FileProcessing {
             }
         }
         if (getFileExtension(inputfile).toLowerCase().equals("doc") || getFileExtension(inputfile).toLowerCase().equals("docx")) {
-            try {
-                WordExtractor extractor = null;
-                FileInputStream fis = new FileInputStream(inputfile.getAbsolutePath());
-                HWPFDocument document = new HWPFDocument(fis);
-                extractor = new WordExtractor(document);
-                String[] fileData = extractor.getParagraphText();
-                for (int i = 0; i < fileData.length; i++) {
-                    if (fileData[i] != null)
-                        System.out.println(fileData[i]);
-                }
-            } catch (Exception exep) {
-                exep.printStackTrace();
-            }
+            XWPFDocument doc = new XWPFDocument(new FileInputStream(inputfile));
+            XWPFWordExtractor extract = new XWPFWordExtractor(doc);
+            this.countWordInText = new StringTokenizer(extract.getText()).countTokens();
+
         }
     }
 
