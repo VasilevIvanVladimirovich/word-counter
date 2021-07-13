@@ -17,7 +17,7 @@ public class FileProcessing {
                 this.countWordInText += countInLine;
             }
         }
-        if (getFileExtension(inputfile).toLowerCase().equals("doc") || getFileExtension(inputfile).toLowerCase().equals("docx")) {
+        /*if (getFileExtension(inputfile).toLowerCase().equals("doc") || getFileExtension(inputfile).toLowerCase().equals("docx")) {
             try
             {
                 FileInputStream fis = new FileInputStream(inputfile.getAbsolutePath());
@@ -34,7 +34,7 @@ public class FileProcessing {
             {
                 exep.printStackTrace();
             }
-        }
+        }*/
     }
 
     public int getCountWordInText() {
