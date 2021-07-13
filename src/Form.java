@@ -56,17 +56,34 @@ public class Form extends JFrame implements ActionListener {
             if (ret == JFileChooser.APPROVE_OPTION) {
                 inputFile = fileopen.getSelectedFile();
                 try {
-
+                    if (!getFileExtension(inputFile).equals("txt")) throw new Exception();
                     label.setText(inputFile.getName());
                     FileProcessing fp = new FileProcessing(inputFile);
                     countWordInText = fp.getCountWordInText();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (Exception e) {
+                    label.setText("Формат не читается");
                 }
             }
         }
         if (ae.getActionCommand().equals("Посчитать слова")) {
-            JOptionPane.showMessageDialog(null, "Слов в файле: " + countWordInText);
+            if (countWordInText==0) JOptionPane.showMessageDialog(null,"Пусто");
+            else JOptionPane.showMessageDialog(null, "Слов в файле: " + countWordInText);
+            label.setText("Выберете файл");
+            inputFile = null;
+            countWordInText=0;
+            System.gc();
         }
+    }
+
+    private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        // если в имени файла есть точка и она не является первым символом в названии файла
+        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            // то вырезаем все знаки после последней точки в названии файла, то есть ХХХХХ.txt -> txt
+            return fileName.substring(fileName.lastIndexOf(".") + 1);
+            // в противном случае возвращаем заглушку, то есть расширение не найдено
+        else return "";
     }
 }
