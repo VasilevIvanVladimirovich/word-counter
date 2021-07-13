@@ -2,8 +2,11 @@ import java.io.*;
 import java.util.Locale;
 import java.util.Vector;
 import java.util.StringTokenizer;
+
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.xwpf.*;
+
 
 public class FileProcessing {
     private int countWordInText = 0;
@@ -17,24 +20,21 @@ public class FileProcessing {
                 this.countWordInText += countInLine;
             }
         }
-        /*if (getFileExtension(inputfile).toLowerCase().equals("doc") || getFileExtension(inputfile).toLowerCase().equals("docx")) {
-            try
-            {
+        if (getFileExtension(inputfile).toLowerCase().equals("doc") || getFileExtension(inputfile).toLowerCase().equals("docx")) {
+            try {
+                WordExtractor extractor = null;
                 FileInputStream fis = new FileInputStream(inputfile.getAbsolutePath());
                 HWPFDocument document = new HWPFDocument(fis);
                 extractor = new WordExtractor(document);
                 String[] fileData = extractor.getParagraphText();
-                for (int i = 0; i < fileData.length; i++)
-                {
+                for (int i = 0; i < fileData.length; i++) {
                     if (fileData[i] != null)
                         System.out.println(fileData[i]);
                 }
-            }
-            catch (Exception exep)
-            {
+            } catch (Exception exep) {
                 exep.printStackTrace();
             }
-        }*/
+        }
     }
 
     public int getCountWordInText() {

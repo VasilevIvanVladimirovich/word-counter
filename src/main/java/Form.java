@@ -56,10 +56,11 @@ public class Form extends JFrame implements ActionListener {
             if (ret == JFileChooser.APPROVE_OPTION) {
                 inputFile = fileopen.getSelectedFile();
                 try {
-                    if (!getFileExtension(inputFile).equals("txt")) throw new Exception();
-                    label.setText(inputFile.getName());
-                    FileProcessing fp = new FileProcessing(inputFile);
-                    countWordInText = fp.getCountWordInText();
+                    if (getFileExtension(inputFile).toLowerCase().equals("txt") || getFileExtension(inputFile).toLowerCase().equals("doc") || getFileExtension(inputFile).toLowerCase().equals("docx")) {
+                        label.setText(inputFile.getName());
+                        FileProcessing fp = new FileProcessing(inputFile);
+                        countWordInText = fp.getCountWordInText();
+                    } else throw new Exception();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -68,11 +69,11 @@ public class Form extends JFrame implements ActionListener {
             }
         }
         if (ae.getActionCommand().equals("Посчитать слова")) {
-            if (countWordInText==0) JOptionPane.showMessageDialog(null,"Пусто");
+            if (countWordInText == 0) JOptionPane.showMessageDialog(null, "Пусто");
             else JOptionPane.showMessageDialog(null, "Слов в файле: " + countWordInText);
             label.setText("Выберете файл");
             inputFile = null;
-            countWordInText=0;
+            countWordInText = 0;
             System.gc();
         }
     }
